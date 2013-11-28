@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AgapeConnect" Class="AgapeWebsiteDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=WIN-UN1L241MDMF\SQLEXPRESS;Initial Catalog=AgapeConnect;Integrated Security=True" SettingsObjectName="Nagape.My.MySettings" SettingsPropertyName="agapeukConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="IsSuperUser" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AffiliateId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="UpdatePassword" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="User_AP_Staff_Rmb" Member="AP_Staff_Rmbs" ThisKey="UserID" OtherKey="UserId" Type="AP_Staff_Rmb" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TabModuleSettings" Member="TabModuleSettings">
+    <Type Name="TabModuleSetting">
+      <Column Name="TabModuleID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SettingName" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SettingValue" Type="System.String" DbType="NVarChar(2000) NOT NULL" CanBeNull="false" />
+      <Association Name="TabModule_TabModuleSetting" Member="TabModule" ThisKey="TabModuleID" OtherKey="TabModuleID" Type="TabModule" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_Departments" Member="AP_StaffBroker_Departments">
+    <Type Name="AP_StaffBroker_Department">
+      <Column Name="CostCenterId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CostCentre" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="CostCentreManager" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CostCentreDelegate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CanRmb" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanCharge" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanGiveTo" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="GivingText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="GivingShortcut" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PayType" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_Staff" Member="AP_StaffBroker_Staffs">
+    <Type Name="AP_StaffBroker_Staff">
+      <Column Name="StaffId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CostCenter" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="StaffTypeId" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="UserId1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="AP_StaffBroker_Staff_AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_StaffProfiles" ThisKey="StaffId" OtherKey="StaffId" Type="AP_StaffBroker_StaffProfile" />
+      <Association Name="AP_StaffBroker_StaffType_AP_StaffBroker_Staff" Member="AP_StaffBroker_StaffType" ThisKey="StaffTypeId" OtherKey="StaffTypeId" Type="AP_StaffBroker_StaffType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_StaffProfiles">
+    <Type Name="AP_StaffBroker_StaffProfile">
+      <Column Name="StaffProfileId" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PropertyValue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="StaffPropertyDefinitionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StaffId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="AP_StaffBroker_Staff_AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_Staff" ThisKey="StaffId" OtherKey="StaffId" Type="AP_StaffBroker_Staff" IsForeignKey="true" />
+      <Association Name="AP_StaffBroker_StaffPropertyDefinition_AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_StaffPropertyDefinition" ThisKey="StaffPropertyDefinitionId" OtherKey="StaffPropertyDefinitionId" Type="AP_StaffBroker_StaffPropertyDefinition" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_StaffPropertyDefinition" Member="AP_StaffBroker_StaffPropertyDefinitions">
+    <Type Name="AP_StaffBroker_StaffPropertyDefinition">
+      <Column Name="StaffPropertyDefinitionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PropertyName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ViewOrder" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Display" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PropertyHelp" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Type" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Association Name="AP_StaffBroker_StaffPropertyDefinition_AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_StaffProfiles" ThisKey="StaffPropertyDefinitionId" OtherKey="StaffPropertyDefinitionId" Type="AP_StaffBroker_StaffProfile" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_StaffType" Member="AP_StaffBroker_StaffTypes">
+    <Type Name="AP_StaffBroker_StaffType">
+      <Column Name="StaffTypeId" Type="System.Int16" DbType="SmallInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="AP_StaffBroker_StaffType_AP_StaffBroker_Staff" Member="AP_StaffBroker_Staffs" ThisKey="StaffTypeId" OtherKey="StaffTypeId" Type="AP_StaffBroker_Staff" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_LeaderMeta" Member="AP_StaffBroker_LeaderMetas">
+    <Type Name="AP_StaffBroker_LeaderMeta">
+      <Column Name="LeaderMetaId" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LeaderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DelegateId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_Templates" Member="AP_StaffBroker_Templates">
+    <Type Name="AP_StaffBroker_Template">
+      <Column Name="TemplateId" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TemplateName" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="TemplateDescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="TemplateHTML" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_Staff_Rmb" Member="AP_Staff_Rmbs">
+    <Type Name="AP_Staff_Rmb">
+      <Column Name="RMBNo" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostCenter" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="UserRef" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="RmbDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserComment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ApprComment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AcctComment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ApprUserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Locked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ProcDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ProcUserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Period" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="SupplierCode" Type="System.String" DbType="VarChar(8)" CanBeNull="true" />
+      <Column Name="EmailSent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Changed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AdvanceRequest" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Department" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SpareField1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SpareField2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SpareField3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SpareField4" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SpareField5" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Error" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ErrorMessage" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DownloadDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DownloadMode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MoreInfoRequested" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="OrigCurrency" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="OrigCurrencyAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="AP_Staff_Rmb_AP_Staff_RmbLine" Member="AP_Staff_RmbLines" ThisKey="RMBNo" OtherKey="RmbNo" Type="AP_Staff_RmbLine" />
+      <Association Name="User_AP_Staff_Rmb" Member="User" ThisKey="UserId" OtherKey="UserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_Staff_RmbLine" Member="AP_Staff_RmbLines">
+    <Type Name="AP_Staff_RmbLine">
+      <Column Name="RmbLineNo" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RmbNo" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="LineType" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="GrossAmount" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="TransDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Taxable" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Receipt" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="VATReceipt" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ReceiptNo" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Mileage" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="MileageRate" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Spare1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Spare2" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Spare3" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Spare4" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Spare5" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="AnalysisCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Split" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LargeTransaction" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="OutOfDate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Department" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AccountCode" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
+      <Column Name="CostCenter" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
+      <Column Name="VATRate" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="VATCode" Type="System.String" DbType="NVarChar(8)" CanBeNull="true" />
+      <Column Name="ForceTaxOrig" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="OrigCurrency" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="OrigCurrencyAmount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ShortComment" Type="System.String" DbType="NVarChar(27)" CanBeNull="true" />
+      <Column Name="ReceiptMode" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="ReceiptImageId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ReceiptText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="AP_Staff_Rmb_AP_Staff_RmbLine" Member="AP_Staff_Rmb" ThisKey="RmbNo" OtherKey="RMBNo" Type="AP_Staff_Rmb" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TabModules" Member="TabModules">
+    <Type Name="TabModule">
+      <Column Name="TabModuleID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TabID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ModuleID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PaneName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ModuleOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CacheTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Alignment" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Color" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Border" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="IconFile" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Visibility" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ContainerSrc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="DisplayTitle" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayPrint" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DisplaySyndicate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsWebSlice" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="WebSliceTitle" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="WebSliceExpiryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WebSliceTTL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedByUserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedOnDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastModifiedByUserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastModifiedOnDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CacheMethod" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ModuleTitle" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="Header" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Footer" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="CultureCode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="UniqueId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="VersionGuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultLanguageGuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="LocalizedVersionGuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="TabModule_TabModuleSetting" Member="TabModuleSettings" ThisKey="TabModuleID" OtherKey="TabModuleID" Type="TabModuleSetting" />
+      <Association Name="Tab_TabModule" Member="Tab" ThisKey="TabID" OtherKey="TabID" Type="Tab" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tabs" Member="Tabs">
+    <Type Name="Tab">
+      <Column Name="TabID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TabOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PortalID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TabName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="IsVisible" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ParentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IconFile" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DisableLink" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="KeyWords" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="SkinSrc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ContainerSrc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="RefreshInterval" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PageHeadText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="IsSecure" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PermanentRedirect" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SiteMapPriority" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedByUserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedOnDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastModifiedByUserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastModifiedOnDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IconFileLarge" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CultureCode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ContentItemID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UniqueId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="VersionGuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultLanguageGuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="LocalizedVersionGuid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="[Level]" Member="Level" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TabPath" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Tab_TabModule" Member="TabModules" ThisKey="TabID" OtherKey="TabID" Type="TabModule" />
+      <Association Name="Tab_Tab" Member="Tabs" ThisKey="TabID" OtherKey="ParentId" Type="Tab" />
+      <Association Name="Tab_Tab" Member="Tab" ThisKey="ParentId" OtherKey="TabID" Type="Tab" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
